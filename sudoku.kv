@@ -183,8 +183,13 @@
             id:t8_7
         TextInput:
             id:t8_8   
-    Button:
-        text:'Решить'
-        id:buuton
-        on_release: root.solve_sudoku()
+    BoxLayout:
+        Button:
+            text: 'Очистить'
+            id: clear_button
+            on_release: root.clear()
+        Button:
+            text:'Решить'
+            id: solve_button
+            on_release: root.solve_sudoku()
     

@@ -2,6 +2,7 @@ class Sudoku:
     def __init__(self, matrix):
         self.matrix = matrix
     
+    #проверка на правильность матрицы
     def check(self)-> bool:
         # проверка строк
         for i in range(len(self.matrix)):
@@ -23,9 +24,11 @@ class Sudoku:
                     return False
         return True
     
+    # решать посредством рекурсии
+    # возвращает True - если решено, False - если решения нет
     def solve(self) -> bool:
         coord = find_zero_in_matr(self.matrix)
-        # если вся матрица заполнена возвращаем true
+        # если вся матрица заполнена возвращаем True
         if coord == (-1,-1):
             return True
         # пробуем подставить значения и проверяем
@@ -35,10 +38,12 @@ class Sudoku:
                 res = self.solve()
                 if res:
                     return res
-        # если ни одно значение не подходит возвращаем false   
+        # если ни одно значение не подходит возвращаем False   
         self.matrix[coord[0]][coord[1]] = 0    
         return False       
 
+# возвращает координаты пустого квадрата в матрице
+# если пустых нет возращает (-1, -1)
 def find_zero_in_matr(matr):
     for i in range(len(matr)):
         for j in range(len(matr[i])):
@@ -46,11 +51,15 @@ def find_zero_in_matr(matr):
                 return (i, j)
     return (-1, -1)
 
+# выводит матриуц судоку на консоли
 def print_2d_matr(matr):
     for i in range(len(matr)):
         print(matr[i])
     print('\n\r')
-        
+
+# проверка массива li на повторения чисел от 1 до 9
+# возвращает True, если нет повторений
+# в противном случае - False       
 def check_list(li) -> bool:
     x = remove_in_list(li, 0)
     for num in range(1,10):
@@ -58,6 +67,7 @@ def check_list(li) -> bool:
             return False
     return True
 
+# возвращает массив элементов из массива li, отличных от elem
 def remove_in_list(li, elem):
     return list(filter(lambda a: a != elem, li))
 
