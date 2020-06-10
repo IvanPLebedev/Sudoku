@@ -6,21 +6,37 @@ from kivy.uix.button import Button
 
 from sudoku import Sudoku
 from utils import InputError
+from threading import Thread
+from kivy.clock import mainthread
+
+from kivy.config import Config
+
+Config.set('graphics', 'resizable', 0)
+Config.set('graphics', 'width', 400)
+Config.set('graphics', 'height', 500)
 
 class Root(BoxLayout):
-	# решать судоку
-	def solve_sudoku(self):
-		self.ids.label.text = 'Ждите, решаю...'
+	# нажатие кнопки Решить
+	def touch_solve(self):
+		self.update_label_text('Ждите, решаю...')
 		try: 
 			matr = self.read_matr()
-			sudoku = Sudoku(matr)
-			if sudoku.solve():
-				self.print_matr(sudoku.matrix)
-				self.ids.label.text = 'Решение'
-			else:
-				self.ids.label.text = 'Решения нет!'
+			Thread(target=self.solve_sudoku, args=(matr,)).start()	
 		except InputError as e:
 			self.ids.label.text = e.msg
+	
+	# решать судоку
+	def solve_sudoku(self, matr):
+		sudoku = Sudoku(matr)
+		if sudoku.solve():
+			self.print_matr(sudoku.matrix)
+			self.update_label_text('Решение')
+		else:
+			self.update_label_text('Решения нет!')
+	
+	@mainthread
+	def update_label_text(self, new_text):
+		self.ids.label.text = new_text
 		
 	# очистить экран ввода
 	def clear(self):
@@ -51,11 +67,11 @@ class Root(BoxLayout):
 					try:
 						number = int(text_input)
 					except:
-						raise InputError('Ошибка ввода в {} строке {} строке'.format(i + 1, j + 1))
+						raise InputError('Ошибка ввода в {} строке {} столбце!'.format(i + 1, j + 1))
 					if 0 < number < 10:
 						line.append(number)
 					else:
-						raise InputError('Ошибка ввода в {} строке {} строке'.format(i + 1, j + 1))
+						raise InputError('Ошибка ввода в {} строке {} столбце!'.format(i + 1, j + 1))
 			res.append(line)
 		return res
 	
