@@ -23,12 +23,14 @@ class Root(BoxLayout):
 			matr = self.read_matr()
 			Thread(target=self.solve_sudoku, args=(matr,)).start()	
 		except InputError as e:
-			self.ids.label.text = e.msg
+			self.update_label_text(e.msg)
 	
 	# решать судоку
 	def solve_sudoku(self, matr):
 		sudoku = Sudoku(matr)
-		if sudoku.solve():
+		if sudoku.check() == False:
+			self.update_label_text('Решения нет. Неправильая матрица.')
+		elif sudoku.solve():
 			self.print_matr(sudoku.matrix)
 			self.update_label_text('Решение')
 		else:
@@ -66,12 +68,13 @@ class Root(BoxLayout):
 				else:
 					try:
 						number = int(text_input)
+						if 0 < number < 10:
+							line.append(number)
+						else:
+							raise InputError('Ошибка значения в {} строке {} столбце!'.format(i + 1, j + 1))
 					except:
-						raise InputError('Ошибка ввода в {} строке {} столбце!'.format(i + 1, j + 1))
-					if 0 < number < 10:
-						line.append(number)
-					else:
-						raise InputError('Ошибка ввода в {} строке {} столбце!'.format(i + 1, j + 1))
+						raise InputError('Ошибка значения в {} строке {} столбце!'.format(i + 1, j + 1))
+					
 			res.append(line)
 		return res
 	
