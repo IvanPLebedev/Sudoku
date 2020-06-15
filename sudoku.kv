@@ -1,13 +1,20 @@
 #:kivy 1.11.1
 <Root>:
+    canvas:
+        Color:
+            rgba: .5, .5, .5, .5
+        Rectangle:
+            pos: self.pos
+            size: self.size
     orientation: 'vertical'
-    pading: 25
+    padding: 25
+    spacing: 3
     Label:
         text:'Введите матрицу судоку.'
         id:label
     BoxLayout:
         id:line_0
-        pading: 25
+        spacing: 3
         TextInput:
             id:t0_0
             multiline: False
@@ -46,7 +53,7 @@
             halign: 'center'
     BoxLayout:
         id:line_1
-        pading: 25
+        spacing: 3
         TextInput:
             id:t1_0
             multiline: False
@@ -85,7 +92,7 @@
             halign: 'center'
     BoxLayout:
         id:line_2
-        pading: 25
+        spacing: 3
         TextInput:
             id:t2_0
             multiline: False
@@ -124,7 +131,7 @@
             halign: 'center'
     BoxLayout:
         id:line_3
-        pading: 25
+        spacing: 3
         TextInput:
             id:t3_0
             multiline: False
@@ -163,7 +170,7 @@
             halign: 'center'
     BoxLayout:
         id:line_4
-        pading: 25
+        spacing: 3
         TextInput:
             id:t4_0
             multiline: False
@@ -202,7 +209,7 @@
             halign: 'center'
     BoxLayout:
         id:line_5
-        pading: 25
+        spacing: 3
         TextInput:
             id:t5_0
             multiline: False
@@ -241,7 +248,7 @@
             halign: 'center'
     BoxLayout:
         id:line_6
-        pading: 25
+        spacing: 3
         TextInput:
             id:t6_0
             multiline: False
@@ -280,7 +287,7 @@
             halign: 'center'
     BoxLayout:
         id:line_7
-        pading: 25
+        spacing: 3
         TextInput:
             id:t7_0
             multiline: False
@@ -319,7 +326,7 @@
             halign: 'center'
     BoxLayout:
         id:line_8
-        pading: 25
+        spacing: 3
         TextInput:
             id:t8_0
             multiline: False
@@ -357,7 +364,7 @@
             multiline: False
             halign: 'center'
     BoxLayout:
-        pading: 25
+        spacing: 3
         Button:
             text: 'Очистить'
             id: clear_button
